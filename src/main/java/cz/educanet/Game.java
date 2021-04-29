@@ -11,12 +11,12 @@ import org.lwjgl.glfw.GLFW;
 public class Game {
 
     private static float[] vertices = {
-            0.5f, 0.5f, 0.0f, // 0 -> Top right
-            0.5f, -0.5f, 0.0f, // 1 -> Bottom right
-            -0.5f, -0.5f, 0.0f, // 2 -> Bottom left
-            -0.5f, 0.5f, 0.0f, // 3 -> Top left
-            -0.5f, -0.5f, 0.0f, // 2 -> Bottom left
-            0.5f, 0.5f, 0.0f, // 0 -> Top right
+            0.5f, 0.5f, 0.0f,
+            0.5f, -0.5f, 0.0f,
+            -0.5f, -0.5f, 0.0f,
+            -0.5f, 0.5f, 0.0f,
+            -0.5f, -0.5f, 0.0f,
+            0.5f, 0.5f, 0.0f,
     };
 
     private static float speed = 0.01f;
@@ -25,28 +25,22 @@ public class Game {
     private static int triangleVboId;
 
     public static void init() {
-        // Setup shaders
         Shaders.initShaders();
 
-        // Generate all the ids
         triangleVaoId = GL33.glGenVertexArrays();
         triangleVboId = GL33.glGenBuffers();
 
-        // Tell OpenGL we are currently using this object (vaoId)
         GL33.glBindVertexArray(triangleVaoId);
-        // Tell OpenGL we are currently writing to this buffer (vboId)
         GL33.glBindBuffer(GL33.GL_ARRAY_BUFFER, triangleVboId);
 
         FloatBuffer fb = BufferUtils.createFloatBuffer(vertices.length)
                 .put(vertices)
                 .flip();
 
-        // Send the buffer (positions) to the GPU
         GL33.glBufferData(GL33.GL_ARRAY_BUFFER, fb, GL33.GL_STATIC_DRAW);
         GL33.glVertexAttribPointer(0, 3, GL33.GL_FLOAT, false, 0, 0);
         GL33.glEnableVertexAttribArray(0);
 
-        // Clear the buffer from the memory (it's saved now on the GPU, no need for it here)
         MemoryUtil.memFree(fb);
     }
 
@@ -93,7 +87,6 @@ public class Game {
                 .put(vertices)
                 .flip();
 
-        // Send the buffer (positions) to the GPU
         GL33.glBufferData(GL33.GL_ARRAY_BUFFER, fb, GL33.GL_STATIC_DRAW);
         GL33.glVertexAttribPointer(0, 3, GL33.GL_FLOAT, false, 0, 0);
         GL33.glEnableVertexAttribArray(0);
